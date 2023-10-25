@@ -1,7 +1,7 @@
 ## <center>PREDICT BODY API</center>
 
 #### <strong>Download Lib</strong>
-`pip install pd sklearn joblib flask flask_cors`
+`pip install các thư viện này :  sklearn joblib flask flask_cors pandas`
 
 #### <strong>Init Model</strong>
 `python model.py`
