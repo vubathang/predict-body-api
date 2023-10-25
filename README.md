@@ -1,10 +1,10 @@
-# predict-body-api
+## <center>PREDICT BODY API</center>
 
-# pip lib
-> pip install pd sklearn joblib flask flask_cors
+#### <strong>Download Lib</strong>
+`pip install pd sklearn joblib flask flask_cors`
 
-# init model
-> python model.py
+#### <strong>Init Model</strong>
+`python model.py`
 
-# run server
-> python my_server.py
+#### <strong>Running Server</strong>
+`python my_server.py`
