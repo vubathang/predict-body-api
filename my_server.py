@@ -3,6 +3,7 @@ from flask_cors import CORS, cross_origin
 from sklearn.preprocessing import PolynomialFeatures
 import joblib
 import pandas as pd
+import os
 
 poly = PolynomialFeatures(degree=2)
 model_names = ['thigh', 'knee', 'ankle', 'biceps', 'forearm', 'wrist']
@@ -19,7 +20,7 @@ app = Flask(__name__)
 CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-# http://127.0.0.1/add
+# http://127.0.0.1/predict
 
 @app.route('/predict', methods=['POST'])
 @cross_origin(origins='*', headers=['Content-Type', 'Authorization'])
