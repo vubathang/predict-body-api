@@ -27,25 +27,67 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 @cross_origin(origins='*', headers=['Content-Type', 'Authorization'])
 
 def upload_image():
-    image_file = request.files['image']
-    height = request.form['height']
-    weight = request.form['weight']
-    image_np = np.frombuffer(image_file.read(), np.uint8)
-    image = cv2.imdecode(image_np, cv2.IMREAD_COLOR)
-    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    cv2.imwrite('gray_image.jpg', gray_image)
+    print(request)
+    # image_file = request.files['image']
+    # height = request.form['height']
+    # weight = request.form['weight']
+    # image_np = np.frombuffer(image_file.read(), np.uint8)
+    # image = cv2.imdecode(image_np, cv2.IMREAD_COLOR)
+    # gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    # cv2.imwrite('gray_image.jpg', gray_image)
+
     # cv2.imshow('Gray Image', gray_image)
     # cv2.waitKey(0)
     # cv2.destroyAllWindows()
 
-    if os.path.exists('gray_image.jpg'):
-      try:
-          os.remove('gray_image.jpg')
-      except Exception as e:
-          print(f"Lỗi xảy ra khi xóa tệp: {e}")
-    return jsonify({
-       'status': 'success'
-    })
+    # if os.path.exists('gray_image.jpg'):
+    #   try:
+    #       os.remove('gray_image.jpg')
+    #   except Exception as e:
+    #       print(f"Lỗi xảy ra khi xóa tệp: {e}")
+    res = {
+      'status': 200,
+      #  'data': {
+      #     **feature,
+      #     **predictions
+      #  }
+      'data': [
+         {
+            'type': 'linear',
+            'statistics': [
+               {
+                  'title': 'Neck to upper hip length',
+                  'value': 52.9,
+               },
+               {
+                  'title': 'Height',
+                  'value': 52.9,
+               },
+               {
+                  'title': 'Weight',
+                  'value': 52.9,
+               },
+            ]
+         },
+         {
+            'type': 'volumetric',
+            'statistics': [
+               {
+                  'title': 'xyz',
+                  'value': 234,
+               },
+               {
+                  'title': 'abc',
+                  'value': 12,
+               },
+            ]
+         }
+      ]
+    }
+
+    return jsonify(
+      res
+    )
 
 # http://127.0.0.1/predict
 
