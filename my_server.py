@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS, cross_origin
 from sklearn.preprocessing import PolynomialFeatures
 import joblib
@@ -34,9 +34,9 @@ def upload_image():
     image = cv2.imdecode(image_np, cv2.IMREAD_COLOR)
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     cv2.imwrite('gray_image.jpg', gray_image)
-    cv2.imshow('Gray Image', gray_image)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    # cv2.imshow('Gray Image', gray_image)
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()
 
     if os.path.exists('gray_image.jpg'):
       try:
@@ -65,14 +65,25 @@ def predict():
 
   print(predictions)
   res = {
-     'status': 'success'
+    'status': 'success',
     #  'data': {
     #     **feature,
     #     **predictions
     #  }
+    'data': {
+      'volumetric': {
+        'Bust grith': 94.5,
+        'Upper chest girth': 96.3,
+        'Waist girth': 88.9
+       }, 
+      'linear': {
+        'Neck to upper hip length': 52.9,
+        'Outside leg length': 116.7
+      }
+    }
   }
 
-  return jsonify({**res})
+  return make_response(jsonify(res), 200)
 
 # Start Backend
 if __name__ == '__main__':
