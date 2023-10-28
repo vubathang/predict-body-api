@@ -6,6 +6,8 @@ import pandas as pd
 from io import BytesIO
 import base64
 from PIL import Image
+import json
+from human_detector import *
 
 poly = PolynomialFeatures(degree=2)
 model_names = ['thigh', 'knee', 'ankle', 'biceps', 'forearm', 'wrist']
@@ -27,55 +29,42 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 @cross_origin(origins='*', headers=['Content-Type', 'Authorization'])
 
 def upload_image():
-
    # Handle image from base64 to .jpg
    image = request.form.get('imageUser')
-   base64_data = image.split(",")[1]
-   image_data = base64.b64decode(base64_data)
-   image = Image.open(BytesIO(image_data))
-   image.show()
+   info =  json.loads(request.form.get('infoUser'))
+   w = float(info.get('Weight'))
+   h = float(info.get('Height'))
 
+   base64_data = image.split(",")[1]
+   # image_data = base64.b64decode(base64_data)
+   # image = Image.open(BytesIO(image_data))
+   # image.show()
+
+
+   linear, volumetric = predict2D(base64_data, h, w)
+   res_linear = []
+   res_volumetric = []
+   for key, value in linear.items():
+      res_linear.append({
+         'title': key,
+         'value': value
+      })
+   for key, value in volumetric.items():
+      res_volumetric.append({
+         'title': key,
+         'value': value
+      })
    # Config res
    res = {
       'status': 200,
-      #  'data': {
-      #     **feature,
-      #     **predictions
-      #  }
       'data': [
          {
             'type': 'linear',
-            'statistics': [
-               {
-                  'title': 'Neck to upper hip length',
-                  'value': 52.9,
-               },
-               {
-                  'title': 'Height',
-                  'value': 52.9,
-               },
-               {
-                  'title': 'Weight',
-                  'value': 52.9,
-               },
-               {
-                  'title': 'Hip',
-                  'value': 52.9,
-               },
-            ]
+            'statistics': res_linear
          },
          {
             'type': 'volumetric',
-            'statistics': [
-               {
-                  'title': 'xyz',
-                  'value': 234,
-               },
-               {
-                  'title': 'abc',
-                  'value': 12,
-               },
-            ]
+            'statistics': res_volumetric
          }
       ]
     }
