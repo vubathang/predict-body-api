@@ -80,21 +80,21 @@ def predict2D(base64_data, height, weight):
                                             landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value])/1.44)
         
         data_linear = {
-            'upper_arm_length_cm': upper_arm_length_cm,
-            'forearm_length_cm': forearm_length_cm,
-            'arm_length_cm': arm_length_cm,
-            'shoulder_length_cm': shoulder_length_cm,
-            'leg_length_cm': leg_length_cm,
-            'back_build_cm': back_build_cm,
-            'shouldertoknee_length_cm': shouldertoknee_length_cm,
-            'thigh_length_cm': thigh_length_cm,
+            'Upper arm length': upper_arm_length_cm,
+            'Forearm length': forearm_length_cm,
+            'Arm length': arm_length_cm,
+            'Shoulder length': shoulder_length_cm,
+            'Leg length': leg_length_cm,
+            'Back build': back_build_cm,
+            'Shoulder to knee': shouldertoknee_length_cm,
+            'Thigh length': thigh_length_cm,
         }
         
 
         data_volumetric = {
-            'thigh_circumference': thigh_circumference,
-            'bicep_circumference': bicep_circumference,
-            'calf_circumference': calf_circumference
+            'Thigh circumference': thigh_circumference,
+            'Bicep circumference': bicep_circumference,
+            'Calf circumference': calf_circumference
         }
 
     return data_linear, data_volumetric
