@@ -48,7 +48,7 @@ def predict2D(base64_data, height, weight):
                                                 landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value])
         
         shoulder_length_pixel = calculateDistance(landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value], 
-                                                landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value])/4
+                                                landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value])
         
         leg_length_pixel = calculateDistance(landmarks[mp_pose.PoseLandmark.LEFT_HIP.value], 
                                             landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value]) + calculateDistance(landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value], 
