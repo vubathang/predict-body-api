@@ -3,9 +3,9 @@ from flask_cors import CORS, cross_origin
 from sklearn.preprocessing import PolynomialFeatures
 import joblib
 import pandas as pd
-import cv2
-import numpy as np
-import os
+from io import BytesIO
+import base64
+from PIL import Image
 
 poly = PolynomialFeatures(degree=2)
 model_names = ['thigh', 'knee', 'ankle', 'biceps', 'forearm', 'wrist']
@@ -27,25 +27,16 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 @cross_origin(origins='*', headers=['Content-Type', 'Authorization'])
 
 def upload_image():
-    print(request)
-    # image_file = request.files['image']
-    # height = request.form['height']
-    # weight = request.form['weight']
-    # image_np = np.frombuffer(image_file.read(), np.uint8)
-    # image = cv2.imdecode(image_np, cv2.IMREAD_COLOR)
-    # gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    # cv2.imwrite('gray_image.jpg', gray_image)
 
-    # cv2.imshow('Gray Image', gray_image)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
+   # Handle image from base64 to .jpg
+   image = request.form.get('imageUser')
+   base64_data = image.split(",")[1]
+   image_data = base64.b64decode(base64_data)
+   image = Image.open(BytesIO(image_data))
+   image.show()
 
-    # if os.path.exists('gray_image.jpg'):
-    #   try:
-    #       os.remove('gray_image.jpg')
-    #   except Exception as e:
-    #       print(f"Lỗi xảy ra khi xóa tệp: {e}")
-    res = {
+   # Config res
+   res = {
       'status': 200,
       #  'data': {
       #     **feature,
@@ -67,6 +58,10 @@ def upload_image():
                   'title': 'Weight',
                   'value': 52.9,
                },
+               {
+                  'title': 'Hip',
+                  'value': 52.9,
+               },
             ]
          },
          {
@@ -85,47 +80,47 @@ def upload_image():
       ]
     }
 
-    return jsonify(
+   return jsonify(
       res
-    )
+   )
 
-# http://127.0.0.1/predict
+# # http://127.0.0.1/predict
 
-@app.route('/predict', methods=['POST'])
-@cross_origin(origins='*', headers=['Content-Type', 'Authorization'])
+# @app.route('/predict', methods=['POST'])
+# @cross_origin(origins='*', headers=['Content-Type', 'Authorization'])
 
-def predict():
-  data = request.get_json(force=True)
-  feature = data['feature']
-  input = poly.fit_transform(pd.DataFrame.from_dict(feature, orient='index').T)
+# def predict():
+#   data = request.get_json(force=True)
+#   feature = data['feature']
+#   input = poly.fit_transform(pd.DataFrame.from_dict(feature, orient='index').T)
 
-  predictions = {}
+#   predictions = {}
 
-  for model_name, model in LR_models.items():
-    prediction = model.predict(input)
-    predictions[model_name] = prediction[0]
+#   for model_name, model in LR_models.items():
+#     prediction = model.predict(input)
+#     predictions[model_name] = prediction[0]
 
-  print(predictions)
-  res = {
-    'status': 'success',
-    #  'data': {
-    #     **feature,
-    #     **predictions
-    #  }
-    'data': {
-      'volumetric': {
-        'Bust grith': 94.5,
-        'Upper chest girth': 96.3,
-        'Waist girth': 88.9
-       }, 
-      'linear': {
-        'Neck to upper hip length': 52.9,
-        'Outside leg length': 116.7
-      }
-    }
-  }
+#   print(predictions)
+#   res = {
+#     'status': 'success',
+#     #  'data': {
+#     #     **feature,
+#     #     **predictions
+#     #  }
+#     'data': {
+#       'volumetric': {
+#         'Bust grith': 94.5,
+#         'Upper chest girth': 96.3,
+#         'Waist girth': 88.9
+#        }, 
+#       'linear': {
+#         'Neck to upper hip length': 52.9,
+#         'Outside leg length': 116.7
+#       }
+#     }
+#   }
 
-  return make_response(jsonify(res), 200)
+#   return make_response(jsonify(res), 200)
 
 # Start Backend
 if __name__ == '__main__':

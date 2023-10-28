@@ -67,16 +67,7 @@ if results.pose_landmarks:
     cv2.putText(image, f"Shoulder Length: {shoulder_length_cm:.2f} cm", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
     cv2.putText(image, f"Leg Length: {leg_length_cm:.2f} cm", (10, 90), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
-# # Vẽ các điểm mốc trên cơ thể
-# mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
 
-# # Hiển thị ảnh với các chỉ số cơ thể
-# image = cv2.resize(image, (700, 500))
-
-# cv2.imshow('Body Measurements', image)
-
-# cv2.waitKey(0)
-# cv2.destroyAllWindows()
 
 
 
