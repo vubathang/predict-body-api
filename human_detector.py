@@ -75,7 +75,7 @@ def predict2D(base64_data, height, weight):
         thigh_length_cm = height_ratio * thigh_length_pixel
         
         thigh_circumference = calculateCircumference(weight,thigh_length_cm)
-        bicep_circumference = calculateCircumference(weight,bicep_length_cm/1.3)
+        bicep_circumference = calculateCircumference(weight,upper_arm_length_cm/1.3)
         calf_circumference = calculateCircumference(weight,height_ratio * calculateDistance(landmarks[mp_pose.PoseLandmark.LEFT_HIP.value], 
                                             landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value])/1.44)
         
