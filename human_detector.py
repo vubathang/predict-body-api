@@ -60,8 +60,6 @@ def predict2D(base64_data, height, weight):
         thigh_length_pixel = calculateDistance(landmarks[mp_pose.PoseLandmark.LEFT_HIP.value], 
                                             landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value])
         
-        bicep_length_pixel = calculateDistance(landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value], 
-                                            landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value])
         
         shouldertoknee_length_pixel = abs(landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y - landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].y)
         
@@ -75,7 +73,6 @@ def predict2D(base64_data, height, weight):
         back_build_cm = (height_ratio * back_build_pixel) - 11
         shouldertoknee_length_cm = height_ratio * shouldertoknee_length_pixel
         thigh_length_cm = height_ratio * thigh_length_pixel
-        bicep_length_cm = height_ratio * bicep_length_pixel
         
         thigh_circumference = calculateCircumference(weight,thigh_length_cm)
         bicep_circumference = calculateCircumference(weight,bicep_length_cm/1.3)
@@ -91,7 +88,6 @@ def predict2D(base64_data, height, weight):
             'back_build_cm': back_build_cm,
             'shouldertoknee_length_cm': shouldertoknee_length_cm,
             'thigh_length_cm': thigh_length_cm,
-            'bicep_length_cm': bicep_length_cm,
         }
         
 
