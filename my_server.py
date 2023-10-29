@@ -47,12 +47,12 @@ def upload_image():
    for key, value in linear.items():
       res_linear.append({
          'title': key,
-         'value': value
+         'value': round(value, 2)
       })
    for key, value in volumetric.items():
       res_volumetric.append({
          'title': key,
-         'value': value
+         'value': round(value, 2)
       })
    # Config res
    res = {
