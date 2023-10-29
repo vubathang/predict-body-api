@@ -2,10 +2,6 @@ from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS, cross_origin
 from sklearn.preprocessing import PolynomialFeatures
 import joblib
-import pandas as pd
-from io import BytesIO
-import base64
-from PIL import Image
 import json
 from human_detector import *
 
