@@ -1,9 +1,7 @@
 import cv2
 import mediapipe as mp
 import math
-from io import BytesIO
 import base64
-from PIL import Image
 import numpy as np
 
 # Hàm tính toán khoảng cách
